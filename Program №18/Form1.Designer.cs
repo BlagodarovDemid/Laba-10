@@ -49,7 +49,9 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Items.AddRange(new object[] {
+            ""});
+            this.listBox1.Location = new System.Drawing.Point(12, 32);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(928, 692);
             this.listBox1.TabIndex = 0;
@@ -185,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1251, 722);
+            this.ClientSize = new System.Drawing.Size(1251, 742);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listBox1);
