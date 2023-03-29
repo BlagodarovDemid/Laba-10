@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace Program__18
@@ -18,14 +19,20 @@ namespace Program__18
         public Form1()
         {
             InitializeComponent();
-            label6.Text = ("00:00:00:000");
+            label6.Text = ("00:00:000");
+            button1.Enabled = false;
+            label7.Enabled = false;
+            trackBar1.Enabled = false;
+            textBox1.Enabled = false;
+            button3.Enabled = false;
         }
         DateTime date1 = new DateTime(0,0);
-        int[] mas = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public int[] mas = {0};
         int[] result;
+        int listcount = 0;
         int count = 0;
         bool flag = false;
-        static int[] BubbleSort(int[] mas, DateTime date1, bool flag)
+        static int[] BubbleSort(int[] mas, DateTime date1)
         {
             int temp;
             for (int i = 0; i < mas.Length; i++)
@@ -41,7 +48,6 @@ namespace Program__18
                     }
                 }
             }
-            flag = true;
             return mas;
         }
         public static void Swap(int array, int array1)
@@ -49,7 +55,7 @@ namespace Program__18
             array = array1;
             array1 = array;
         }
-        static int[] ShellSort(int[] array)
+        static int[] ShellSort(int[] array, DateTime date1)
         {
             //расстояние между элементами, которые сравниваются
             var d = array.Length / 2;
@@ -72,40 +78,57 @@ namespace Program__18
         {
 
         }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-
+            label7.Enabled = true;
+            trackBar1.Enabled = true;
+            button3.Enabled = true;
         }
-
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-
+            label7.Enabled = true;
+            trackBar1.Enabled = true;
+            button3.Enabled = true;
         }
-        public void AddItemsListBox(int first = -1, int second = -1)
+        public void AddItemsListBox(int[] mas,int first = -1, int second = -1)
         {
             listBox1.Items.Add("");
             foreach (var item in mas)
             {
                 if (item == first || item == second)
                 {
-                    listBox1.Items[count] += '[' + Convert.ToString(item) + ']' + " ";
+                    listBox1.Items[listcount] += '[' + Convert.ToString(item) + ']' + " ";
                 }
                 else
                 {
-                    listBox1.Items[count] += Convert.ToString(item) + " ";
+                    listBox1.Items[listcount] += Convert.ToString(item) + " ";
                 }
             }
-            count++;
+            listcount++;
+        }
+        public int[] Generate(int count)
+        {
+            int[] array = new int[count];
+            int seed = unchecked(DateTime.Now.Ticks.GetHashCode());
+            Random rand = new Random(seed);
+            for (int i = 0; i < count; i++)
+            {
+                array[i] = rand.Next(0, 999);
+            }
+            return array;
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            label6.Text = date1.ToString("mm:ss:fff");
             if (radioButton1.Checked)
             {
-                result = BubbleSort(mas, date1, flag);
-                this.AddItemsListBox();
-                listBox1.Text += Convert.ToString(result) + "\n";
-                //label6.Text = date1.ToString("hh:mm:ss:fff");
+                result = BubbleSort(mas, date1);
+                this.AddItemsListBox(result);
+            }
+            if (radioButton2.Checked)
+            {
+                result = ShellSort(mas, date1);
+                this.AddItemsListBox(result);
             }
         }
         /*            if (Context.array != null)
@@ -135,6 +158,16 @@ namespace Program__18
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            mas = Generate(count);
+            button1.Enabled = true;
+        }
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            count = trackBar1.Value;
+            textBox1.Text = trackBar1.Value.ToString();
         }
     }
 }
