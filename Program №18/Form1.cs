@@ -19,7 +19,7 @@ namespace Program__18
         public Form1()
         {
             InitializeComponent();
-            label6.Text = ("00:00:000");
+            label6.Text = ("00:00:00:000");
             button1.Enabled = false;
             label7.Enabled = false;
             trackBar1.Enabled = false;
@@ -226,7 +226,22 @@ namespace Program__18
             {
                 Bubble bubble = new Bubble();
                 AddItemsListBox(mas);
+
+                System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
+                myStopwatch.Start();
+
                 bubble.BubbleSort(mas);
+
+                myStopwatch.Stop();
+                var resultTime = myStopwatch.Elapsed;
+                string elapsedTime =
+                String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                resultTime.Hours,
+                resultTime.Minutes,
+                resultTime.Seconds,
+                resultTime.Milliseconds);
+                label6.Text = elapsedTime.ToString();
+
                 AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
@@ -238,7 +253,22 @@ namespace Program__18
             {
                 Shell shell = new Shell();
                 AddItemsListBox(mas);
+
+                System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
+                myStopwatch.Start();
+
                 shell.ShellSort(mas);
+
+                myStopwatch.Stop();
+                var resultTime = myStopwatch.Elapsed;
+                string elapsedTime =
+                String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                resultTime.Hours,
+                resultTime.Minutes,
+                resultTime.Seconds,
+                resultTime.Milliseconds);
+                label6.Text = elapsedTime.ToString();
+
                 AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
