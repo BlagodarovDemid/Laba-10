@@ -26,9 +26,7 @@ namespace Program__18
             textBox1.Enabled = false;
             button3.Enabled = false;
         }
-        DateTime date1 = new DateTime(0, 0);
         public int[] mas;
-        int[] result;
         int listcount = 0;
         int count = 0;
         public static int iterationCount = 0;
@@ -62,6 +60,86 @@ namespace Program__18
                     //form1.label4.Text = NumberOfPermutations.ToString();
                     return mas;
                 }*/
+        /*static int[] ShellSort(int[] array)
+        {
+            //расстояние между элементами, которые сравниваются
+            var d = array.Length / 2;
+            while (d >= 1)
+            {
+                for (var i = d; i < array.Length; i++)
+                {
+                    var j = i;
+                    iterationCount++;
+                    comprasin++;
+                    while ((j >= d) && (array[j - d] > array[j]))
+                    {
+                        Swap(ref array[j], ref array[j - d]);
+                        j = j - d;
+                        NumberOfPermutations++;
+                    }
+                }
+                d = d / 2;
+            }
+            return array;
+        }*/
+        /*            if (Context.array != null)
+                    {
+                        if (radioButton1.Checked == true)
+                        {
+                            this.context = new Context(new BubbleSort());
+                            context.ExecuteAlgorithm();
+                            this.AddItemsListBox();
+                            IOFile.SaveData();
+                            buttonSort.Enabled = false;
+                        }
+                        if (radioButton2.Checked == true)
+                        {
+                            this.context = new Context(new ShellSort());
+                            context.ExecuteAlgorithm();
+                            this.AddItemsListBox();
+                            IOFile.SaveData();
+                            buttonSort.Enabled = false;
+                        }
+                            IOFile.content = "";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Массив пуст, сортировка невозможна");
+                    }*/
+        public static void Swap(ref int a, ref int b)
+        {
+            int c = a;
+            a = b;
+            b = c;
+        }
+        public int[] Generate(int count)
+        {
+            int[] array = new int[count];
+            int seed = unchecked(DateTime.Now.Ticks.GetHashCode());
+            Random rand = new Random(seed);
+            for (int i = 0; i < count; i++)
+            {
+                array[i] = rand.Next(0, 999);
+            }
+            return array;
+        }
+        public void AddItemsListBox(int[] mas, int first = -1, int second = -1)
+        {
+            listBox1.Items.Add("");
+            foreach (var item in mas)
+            {
+                if (item == first || item == second)
+                {
+                    listBox1.Items[listcount] += '[' + Convert.ToString(item) + ']' + " ";
+                }
+                else
+                {
+                    listBox1.Items[listcount] += Convert.ToString(item) + " ";
+                }
+            }
+
+            listcount++;
+        }
         public class Bubble
         {
             //public static Form1 form1;
@@ -99,34 +177,6 @@ namespace Program__18
                 return mas;
             }
         }
-        public static void Swap(ref int a, ref int b)
-        {
-            int c = a;
-            a = b;
-            b = c;
-        }
-        /*static int[] ShellSort(int[] array)
-        {
-            //расстояние между элементами, которые сравниваются
-            var d = array.Length / 2;
-            while (d >= 1)
-            {
-                for (var i = d; i < array.Length; i++)
-                {
-                    var j = i;
-                    iterationCount++;
-                    comprasin++;
-                    while ((j >= d) && (array[j - d] > array[j]))
-                    {
-                        Swap(ref array[j], ref array[j - d]);
-                        j = j - d;
-                        NumberOfPermutations++;
-                    }
-                }
-                d = d / 2;
-            }
-            return array;
-        }*/
         public class Shell
         {
             //public static Form1 form1;
@@ -165,51 +215,10 @@ namespace Program__18
                 return array;
             }
         }
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
-        }
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            button1.Enabled = true;
-            label7.Enabled = true;
-            trackBar1.Enabled = true;
-            button3.Enabled = true;
-        }
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            button1.Enabled = true;
-            label7.Enabled = true;
-            trackBar1.Enabled = true;
-            button3.Enabled = true;
-        }
-        public void AddItemsListBox(int[] mas, int first = -1, int second = -1)
-        {
-            listBox1.Items.Add("");
-            foreach (var item in mas)
-            {
-                if (item == first || item == second)
-                {
-                    listBox1.Items[listcount] += '[' + Convert.ToString(item) + ']' + " ";
-                }
-                else
-                {
-                    listBox1.Items[listcount] += Convert.ToString(item) + " ";
-                }
-            }
-
-            listcount++;
-        }
-        public int[] Generate(int count)
-        {
-            int[] array = new int[count];
-            int seed = unchecked(DateTime.Now.Ticks.GetHashCode());
-            Random rand = new Random(seed);
-            for (int i = 0; i < count; i++)
-            {
-                array[i] = rand.Next(0, 999);
-            }
-            return array;
+            count = trackBar1.Value;
+            textBox1.Text = trackBar1.Value.ToString();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -238,49 +247,38 @@ namespace Program__18
                 button1.Enabled = false;
             }
         }
-        /*            if (Context.array != null)
-                    {
-                        if (radioButton1.Checked == true)
-                        {
-                            this.context = new Context(new BubbleSort());
-                            context.ExecuteAlgorithm();
-                            this.AddItemsListBox();
-                            IOFile.SaveData();
-                            buttonSort.Enabled = false;
-                        }
-                        if (radioButton2.Checked == true)
-                        {
-                            this.context = new Context(new ShellSort());
-                            context.ExecuteAlgorithm();
-                            this.AddItemsListBox();
-                            IOFile.SaveData();
-                            buttonSort.Enabled = false;
-                        }
-                            IOFile.content = "";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Массив пуст, сортировка невозможна");
-                    }*/
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void button3_Click(object sender, EventArgs e)
         {
             mas = Generate(count);
             button1.Enabled = true;
             //listBox1.Items.Clear();
         }
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            count = trackBar1.Value;
-            textBox1.Text = trackBar1.Value.ToString();
-        }
         private void button2_Click(object sender, EventArgs e)
         {
             Array.Clear(mas, 0, mas.Length);
             listBox1.Items.Clear();
+        }
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
+            label7.Enabled = true;
+            trackBar1.Enabled = true;
+            button3.Enabled = true;
+        }
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
+            label7.Enabled = true;
+            trackBar1.Enabled = true;
+            button3.Enabled = true;
+        }
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
