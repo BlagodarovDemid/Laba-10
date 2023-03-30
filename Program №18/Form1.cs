@@ -64,7 +64,8 @@ namespace Program__18
                 }*/
         public class Bubble
         {
-            public static Form1 form1;
+            //public static Form1 form1;
+            Form1 form1 = new Form1();
             public int[] BubbleSort(int[] mas)
             {
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
@@ -82,7 +83,7 @@ namespace Program__18
                             mas[i] = mas[j];
                             mas[j] = temp;
                             NumberOfPermutations++;
-                            //form1.AddItemsListBox(mas[i], mas[j]);
+                            form1.AddItemsListBox(mas, mas[i], mas[j]);
                         }
                     }
                 }
@@ -94,7 +95,7 @@ namespace Program__18
                 resultTime.Minutes,
                 resultTime.Seconds,
                 resultTime.Milliseconds);
-                //form1.label6.Text = elapsedTime;
+                form1.label6.Text = elapsedTime.ToString();
                 return mas;
             }
         }
@@ -104,7 +105,7 @@ namespace Program__18
             a = b;
             b = c;
         }
-        static int[] ShellSort(int[] array)
+        /*static int[] ShellSort(int[] array)
         {
             //расстояние между элементами, которые сравниваются
             var d = array.Length / 2;
@@ -113,15 +114,56 @@ namespace Program__18
                 for (var i = d; i < array.Length; i++)
                 {
                     var j = i;
+                    iterationCount++;
+                    comprasin++;
                     while ((j >= d) && (array[j - d] > array[j]))
                     {
                         Swap(ref array[j], ref array[j - d]);
                         j = j - d;
+                        NumberOfPermutations++;
                     }
                 }
                 d = d / 2;
             }
             return array;
+        }*/
+        public class Shell
+        {
+            //public static Form1 form1;
+            Form1 form1 = new Form1();
+            public int[] ShellSort(int[] array)
+            {
+                System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
+                myStopwatch.Start();
+                var d = array.Length / 2;
+                while (d >= 1)
+                {
+                    for (var i = d; i < array.Length; i++)
+                    {
+                        var j = i;
+                        iterationCount++;
+                        comprasin++;
+                        while ((j >= d) && (array[j - d] > array[j]))
+                        {
+                            Swap(ref array[j], ref array[j - d]);
+                            j = j - d;
+                            NumberOfPermutations++;
+                            form1.AddItemsListBox(array);
+                        }
+                    }
+                    d = d / 2;
+                }
+                myStopwatch.Stop();
+                var resultTime = myStopwatch.Elapsed;
+                string elapsedTime =
+                String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+                resultTime.Hours,
+                resultTime.Minutes,
+                resultTime.Seconds,
+                resultTime.Milliseconds);
+                form1.label6.Text = elapsedTime.ToString();
+                return array;
+            }
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -141,7 +183,7 @@ namespace Program__18
             trackBar1.Enabled = true;
             button3.Enabled = true;
         }
-        public void AddItemsListBox(int first = -1, int second = -1)
+        public void AddItemsListBox(int[] mas, int first = -1, int second = -1)
         {
             listBox1.Items.Add("");
             foreach (var item in mas)
@@ -155,6 +197,7 @@ namespace Program__18
                     listBox1.Items[listcount] += Convert.ToString(item) + " ";
                 }
             }
+
             listcount++;
         }
         public int[] Generate(int count)
@@ -173,8 +216,9 @@ namespace Program__18
             if (radioButton1.Checked)
             {
                 Bubble bubble = new Bubble();
+                AddItemsListBox(mas);
                 bubble.BubbleSort(mas);
-                AddItemsListBox();
+                AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
                 comprasin = 0;
@@ -183,8 +227,10 @@ namespace Program__18
             }
             if (radioButton2.Checked)
             {
-                result = ShellSort(mas);
-                AddItemsListBox();
+                Shell shell = new Shell();
+                AddItemsListBox(mas);
+                shell.ShellSort(mas);
+                AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
                 comprasin = 0;
@@ -224,6 +270,7 @@ namespace Program__18
         {
             mas = Generate(count);
             button1.Enabled = true;
+            //listBox1.Items.Clear();
         }
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
