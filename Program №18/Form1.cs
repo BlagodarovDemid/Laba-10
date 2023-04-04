@@ -28,7 +28,6 @@ namespace Program__18
             button3.Enabled = false;
         }
         public static Form1 form1;
-        public static OpenFileDialog openFileDialog1;
         public string path;
         public int[] mas;
         int listcount = 0;
@@ -245,7 +244,7 @@ namespace Program__18
         public class OpenFile
         {
             public static Form1 form1;
-            public static OpenFileDialog openFileDialog1;
+            public static OpenFileDialog openFileDialog1 = new OpenFileDialog();
             public int[] Open()
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
@@ -259,12 +258,10 @@ namespace Program__18
                     {
                         string str = sr.ReadToEnd();
                         form1.mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
-                        form1.listBox1.Items.Add("\tИсходный массив\n [");
-                        foreach (int i in form1.mas)
-                        {
-                            form1.listBox1.Items.Add(i + " ");
-                        }
-                        form1.listBox1.Items.Add("]\n");
+                        form1.listBox1.Items[0] += "\tИсходный массив\n [";
+                        form1.AddItemsListBox(form1.mas);
+                        form1.listBox1.Items[0] += "]\n";
+                        form1.button1.Enabled = true;
                     }
                     catch { MessageBox.Show("Ошибка"); }
                 }
@@ -273,25 +270,6 @@ namespace Program__18
         }
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-                        {
-                            return;
-                        }
-                        path = openFileDialog1.FileName;
-                        //using (StreamReader sr = new StreamReader(@"C:\Users\MSII\OneDrive\Рабочий стол\array.txt"))
-                        using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
-                        {
-                            try
-                            {
-                                string str = sr.ReadToEnd();
-                                mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
-                                listBox1.Items[0] += "\tИсходный массив\n [";
-                                AddItemsListBox(mas);
-                                listBox1.Items[0] += "]\n";
-                                button1.Enabled = true;
-                            }
-                            catch { MessageBox.Show("Ошибка"); }
-                        }*/
             OpenFile openFile = new OpenFile();
             openFile.Open();
         }
@@ -310,7 +288,6 @@ namespace Program__18
         {
             Bubble.form1 = this;
             Shell.form1 = this;
-            OpenFile.openFileDialog1 = openFileDialog1;
             OpenFile.form1 = this;
         }
     }
