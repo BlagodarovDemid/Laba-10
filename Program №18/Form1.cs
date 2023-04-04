@@ -28,7 +28,7 @@ namespace Program__18
             button3.Enabled = false;
         }
         public static Form1 form1;
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        public static OpenFileDialog openFileDialog1;
         public string path;
         public int[] mas;
         int listcount = 0;
@@ -234,39 +234,66 @@ namespace Program__18
         {
 
         }
-
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
-
+        public class OpenFile
+        {
+            public static Form1 form1;
+            public static OpenFileDialog openFileDialog1;
+            public int[] Open()
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                {
+                    return form1.mas;
+                }
+                form1.path = openFileDialog1.FileName;
+                using (StreamReader sr = new StreamReader(form1.path, System.Text.Encoding.Default))
+                {
+                    try
+                    {
+                        string str = sr.ReadToEnd();
+                        form1.mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
+                        form1.listBox1.Items.Add("\tИсходный массив\n [");
+                        foreach (int i in form1.mas)
+                        {
+                            form1.listBox1.Items.Add(i + " ");
+                        }
+                        form1.listBox1.Items.Add("]\n");
+                    }
+                    catch { MessageBox.Show("Ошибка"); }
+                }
+                return form1.mas;
+            }
+        }
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-/*            if (form1.openFileDialog1.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
-            path = form1.openFileDialog1.FileName;
-            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
-            {
-                try
-                {
-                    string str = sr.ReadToEnd();
-                    mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
-                    listBox1.Items.Add("\tИсходный массив\n [");
-                    foreach (int i in mas)
-                    {
-                        listBox1.Items.Add(i + " ");
-                    }
-                    listBox1.Items.Add("]\n");
-                }
-                catch { MessageBox.Show("Ошибка"); }
-            }*/
+            /*            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+                        path = openFileDialog1.FileName;
+                        //using (StreamReader sr = new StreamReader(@"C:\Users\MSII\OneDrive\Рабочий стол\array.txt"))
+                        using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+                        {
+                            try
+                            {
+                                string str = sr.ReadToEnd();
+                                mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
+                                listBox1.Items[0] += "\tИсходный массив\n [";
+                                AddItemsListBox(mas);
+                                listBox1.Items[0] += "]\n";
+                                button1.Enabled = true;
+                            }
+                            catch { MessageBox.Show("Ошибка"); }
+                        }*/
+            OpenFile openFile = new OpenFile();
+            openFile.Open();
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -283,6 +310,8 @@ namespace Program__18
         {
             Bubble.form1 = this;
             Shell.form1 = this;
+            OpenFile.openFileDialog1 = openFileDialog1;
+            OpenFile.form1 = this;
         }
     }
 }
