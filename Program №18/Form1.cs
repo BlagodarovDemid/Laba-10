@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
@@ -27,62 +28,14 @@ namespace Program__18
             button3.Enabled = false;
         }
         public static Form1 form1;
+        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        public string path;
         public int[] mas;
         int listcount = 0;
         int count = 0;
         public static int iterationCount = 0;
         public static int comprasin = 0;
         public static int NumberOfPermutations = 0;
-        /*        static int[] BubbleSort(int[] mas, DateTime date1)
-                {
-                    //Form1 form1 = new Form1();
-                    Form1 form1;
-                    int temp;
-                    for (int i = 0; i < mas.Length; i++)
-                    {
-                        for (int j = i + 1; j < mas.Length; j++)
-                        {
-                            iterationCount++;
-                            comprasin++;
-                            if (mas[i] > mas[j])
-                            {
-                                temp = mas[i];
-                                mas[i] = mas[j];
-                                mas[j] = temp;
-                                NumberOfPermutations++;
-                                form1.AddItemsListBox(mas[i], mas[j]);
-                                //date1 = form1.date1;
-                                date1.AddMilliseconds(1);
-                                form1.label6.Text = date1.ToString("mm:ss:fff");
-                            }
-                        }
-                    }
-                    //form1.label2.Text = comprasin.ToString();
-                    //form1.label4.Text = NumberOfPermutations.ToString();
-                    return mas;
-                }*/
-        /*static int[] ShellSort(int[] array)
-        {
-            //расстояние между элементами, которые сравниваются
-            var d = array.Length / 2;
-            while (d >= 1)
-            {
-                for (var i = d; i < array.Length; i++)
-                {
-                    var j = i;
-                    iterationCount++;
-                    comprasin++;
-                    while ((j >= d) && (array[j - d] > array[j]))
-                    {
-                        Swap(ref array[j], ref array[j - d]);
-                        j = j - d;
-                        NumberOfPermutations++;
-                    }
-                }
-                d = d / 2;
-            }
-            return array;
-        }*/
         /*            if (Context.array != null)
                     {
                         if (radioButton1.Checked == true)
@@ -143,6 +96,7 @@ namespace Program__18
         }
         public class Bubble
         {
+            public static Form1 form1;
             public int[] BubbleSort(int[] mas)
             {
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
@@ -178,8 +132,7 @@ namespace Program__18
         }
         public class Shell
         {
-            //public static Form1 form1;
-            Form1 form1 = new Form1();
+            public static Form1 form1;
             public int[] ShellSort(int[] array)
             {
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
@@ -226,22 +179,8 @@ namespace Program__18
                 Bubble bubble = new Bubble();
                 AddItemsListBox(mas);
 
-                System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
-                myStopwatch.Start();
-
                 bubble.BubbleSort(mas);
 
-                myStopwatch.Stop();
-                var resultTime = myStopwatch.Elapsed;
-                string elapsedTime =
-                String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-                resultTime.Hours,
-                resultTime.Minutes,
-                resultTime.Seconds,
-                resultTime.Milliseconds);
-                label6.Text = elapsedTime.ToString();
-
-                AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
                 comprasin = 0;
@@ -253,22 +192,8 @@ namespace Program__18
                 Shell shell = new Shell();
                 AddItemsListBox(mas);
 
-                System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
-                myStopwatch.Start();
-
                 shell.ShellSort(mas);
 
-                myStopwatch.Stop();
-                var resultTime = myStopwatch.Elapsed;
-                string elapsedTime =
-                String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-                resultTime.Hours,
-                resultTime.Minutes,
-                resultTime.Seconds,
-                resultTime.Milliseconds);
-                label6.Text = elapsedTime.ToString();
-
-                AddItemsListBox(mas);
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
                 comprasin = 0;
@@ -322,7 +247,26 @@ namespace Program__18
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+/*            if (form1.openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            path = form1.openFileDialog1.FileName;
+            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+            {
+                try
+                {
+                    string str = sr.ReadToEnd();
+                    mas = str.Split(' ').Select(i => Convert.ToInt32(i)).ToArray();
+                    listBox1.Items.Add("\tИсходный массив\n [");
+                    foreach (int i in mas)
+                    {
+                        listBox1.Items.Add(i + " ");
+                    }
+                    listBox1.Items.Add("]\n");
+                }
+                catch { MessageBox.Show("Ошибка"); }
+            }*/
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -333,6 +277,12 @@ namespace Program__18
         private void анализToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Bubble.form1 = this;
+            Shell.form1 = this;
         }
     }
 }
