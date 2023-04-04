@@ -26,6 +26,7 @@ namespace Program__18
             textBox1.Enabled = false;
             button3.Enabled = false;
         }
+        public static Form1 form1;
         public int[] mas;
         int listcount = 0;
         int count = 0;
@@ -142,8 +143,6 @@ namespace Program__18
         }
         public class Bubble
         {
-            //public static Form1 form1;
-            Form1 form1 = new Form1();
             public int[] BubbleSort(int[] mas)
             {
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
@@ -307,6 +306,31 @@ namespace Program__18
 
         }
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void анализToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
