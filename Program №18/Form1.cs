@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -35,30 +36,6 @@ namespace Program__18
         public static int iterationCount = 0;
         public static int comprasin = 0;
         public static int NumberOfPermutations = 0;
-        /*            if (Context.array != null)
-                    {
-                        if (radioButton1.Checked == true)
-                        {
-                            this.context = new Context(new BubbleSort());
-                            context.ExecuteAlgorithm();
-                            this.AddItemsListBox();
-                            IOFile.SaveData();
-                            buttonSort.Enabled = false;
-                        }
-                        if (radioButton2.Checked == true)
-                        {
-                            this.context = new Context(new ShellSort());
-                            context.ExecuteAlgorithm();
-                            this.AddItemsListBox();
-                            IOFile.SaveData();
-                            buttonSort.Enabled = false;
-                        }
-                            IOFile.content = "";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Массив пуст, сортировка невозможна");
-                    }*/
         public static void Swap(ref int a, ref int b)
         {
             int c = a;
@@ -96,27 +73,44 @@ namespace Program__18
         public class Bubble
         {
             public static Form1 form1;
+            public static SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            public static StreamWriter sw;
             public int[] BubbleSort(int[] mas)
             {
+                sw = new StreamWriter(new FileStream("1.txt", FileMode.Create, FileAccess.Write));
+
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
                 myStopwatch.Start();
                 int temp;
+                for (int i = 0; i < mas.Length; i++)
+                {
+                    sw.Write(mas[i] + " ");
+                }
                 for (int i = 0; i < mas.Length; i++)
                 {
                     for (int j = i + 1; j < mas.Length; j++)
                     {
                         iterationCount++;
                         comprasin++;
+                        sw.Write("\t\n{0} Итерация:",iterationCount);
+                        sw.Write("\t\nСравниваем {0} и {1}", mas[i], mas[j]);
                         if (mas[i] > mas[j])
                         {
+                            sw.Write("\t\nПерестановка {0} и {1}", mas[i], mas[j]);
                             temp = mas[i];
                             mas[i] = mas[j];
                             mas[j] = temp;
                             NumberOfPermutations++;
                             form1.AddItemsListBox(mas, mas[i], mas[j]);
+                            sw.Write("\t\n");
+                            for (int v = 0; v < mas.Length; v++)
+                            {
+                                sw.Write(mas[v] + " ");
+                            }
                         }
                     }
                 }
+                sw.Close();
                 myStopwatch.Stop();
                 var resultTime = myStopwatch.Elapsed;
                 string elapsedTime =
@@ -132,11 +126,19 @@ namespace Program__18
         public class Shell
         {
             public static Form1 form1;
+            public static SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            public static StreamWriter sw;
             public int[] ShellSort(int[] array)
             {
+                sw = new StreamWriter(new FileStream("1.txt", FileMode.Create, FileAccess.Write));
+
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
                 myStopwatch.Start();
                 var d = array.Length / 2;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    sw.Write(array[i] + " ");
+                }
                 while (d >= 1)
                 {
                     for (var i = d; i < array.Length; i++)
@@ -144,12 +146,19 @@ namespace Program__18
                         var j = i;
                         iterationCount++;
                         comprasin++;
+                        sw.Write("\t\n{0} Итерация:", iterationCount);
                         while ((j >= d) && (array[j - d] > array[j]))
                         {
                             Swap(ref array[j], ref array[j - d]);
+                            sw.Write("\t\nМеняем местами {0} и {1}", array[j], array[j - d]);
                             j = j - d;
                             NumberOfPermutations++;
                             form1.AddItemsListBox(array);
+                            sw.Write("\t\n");
+                            for (int v = 0; v < array.Length; v++)
+                            {
+                                sw.Write(array[v] + " ");
+                            }
                         }
                     }
                     d = d / 2;
@@ -204,12 +213,12 @@ namespace Program__18
         {
             mas = Generate(count);
             button1.Enabled = true;
-            //listBox1.Items.Clear();
+            listBox1.Text = "";
         }
         private void button2_Click(object sender, EventArgs e)
         {
             Array.Clear(mas, 0, mas.Length);
-            listBox1.Items.Clear();
+            listBox1.Text = "";
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -273,17 +282,19 @@ namespace Program__18
             OpenFile openFile = new OpenFile();
             openFile.Open();
         }
-
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.ShowDialog();
+            string sourcePath = @"1.txt";
+            string destFile = saveFileDialog.FileName;
+            File.Copy(sourcePath, destFile, true);         
         }
-
         private void анализToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             Bubble.form1 = this;
