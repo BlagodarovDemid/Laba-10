@@ -29,6 +29,7 @@ namespace Program__18
             button3.Enabled = false;
         }
         public static Form1 form1;
+        public static Form2 form2 = new Form2();
         public string path;
         public string file = "";
         public int[] mas;
@@ -121,6 +122,7 @@ namespace Program__18
                 resultTime.Seconds,
                 resultTime.Milliseconds);
                 form1.label6.Text = elapsedTime.ToString();
+                form2.Row("Bubble", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString());
                 return mas;
             }
         }
@@ -174,6 +176,7 @@ namespace Program__18
                 resultTime.Seconds,
                 resultTime.Milliseconds);
                 form1.label6.Text = elapsedTime.ToString();
+                form2.Row("Shell", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString());
                 return array;
             }
         }
@@ -302,7 +305,7 @@ namespace Program__18
         }
         private void анализToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            form2.Show();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
