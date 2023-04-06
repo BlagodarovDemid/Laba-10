@@ -30,8 +30,9 @@ namespace Program__18
         }
         public static Form1 form1;
         public string path;
+        public string file = "";
         public int[] mas;
-        int listcount = 0;
+        public int listcount = 0;
         int count = 0;
         public static int iterationCount = 0;
         public static int comprasin = 0;
@@ -77,7 +78,7 @@ namespace Program__18
             public static StreamWriter sw;
             public int[] BubbleSort(int[] mas)
             {
-                sw = new StreamWriter(new FileStream("1.txt", FileMode.Create, FileAccess.Write));
+                sw = new StreamWriter(new FileStream("BubbleSort.txt", FileMode.Create, FileAccess.Write));
 
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
                 myStopwatch.Start();
@@ -130,7 +131,7 @@ namespace Program__18
             public static StreamWriter sw;
             public int[] ShellSort(int[] array)
             {
-                sw = new StreamWriter(new FileStream("1.txt", FileMode.Create, FileAccess.Write));
+                sw = new StreamWriter(new FileStream("ShellSort.txt", FileMode.Create, FileAccess.Write));
 
                 System.Diagnostics.Stopwatch myStopwatch = new System.Diagnostics.Stopwatch();
                 myStopwatch.Start();
@@ -149,20 +150,21 @@ namespace Program__18
                         sw.Write("\t\n{0} Итерация:", iterationCount);
                         while ((j >= d) && (array[j - d] > array[j]))
                         {
+                            sw.Write("\t\nПерестановка {0} и {1}", array[j], array[j - d]);
                             Swap(ref array[j], ref array[j - d]);
-                            sw.Write("\t\nМеняем местами {0} и {1}", array[j], array[j - d]);
                             j = j - d;
                             NumberOfPermutations++;
                             form1.AddItemsListBox(array);
-                            sw.Write("\t\n");
-                            for (int v = 0; v < array.Length; v++)
-                            {
-                                sw.Write(array[v] + " ");
-                            }
+                        }
+                        sw.Write("\t\n");
+                        for (int v = 0; v < array.Length; v++)
+                        {
+                            sw.Write(array[v] + " ");
                         }
                     }
                     d = d / 2;
                 }
+                sw.Close();
                 myStopwatch.Stop();
                 var resultTime = myStopwatch.Elapsed;
                 string elapsedTime =
@@ -191,6 +193,7 @@ namespace Program__18
 
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
+                iterationCount = 0;
                 comprasin = 0;
                 NumberOfPermutations = 0;
                 button1.Enabled = false;
@@ -204,6 +207,7 @@ namespace Program__18
 
                 label2.Text = comprasin.ToString();
                 label4.Text = NumberOfPermutations.ToString();
+                iterationCount = 0;
                 comprasin = 0;
                 NumberOfPermutations = 0;
                 button1.Enabled = false;
@@ -218,10 +222,12 @@ namespace Program__18
         private void button2_Click(object sender, EventArgs e)
         {
             Array.Clear(mas, 0, mas.Length);
-            listBox1.Text = "";
+            listcount = 0;
+            listBox1.Items.Clear();
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            file = "BubbleSort.txt";
             button1.Enabled = true;
             label7.Enabled = true;
             trackBar1.Enabled = true;
@@ -229,6 +235,7 @@ namespace Program__18
         }
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            file = "ShellSort.txt";
             button1.Enabled = true;
             label7.Enabled = true;
             trackBar1.Enabled = true;
@@ -261,7 +268,7 @@ namespace Program__18
                     return form1.mas;
                 }
                 form1.path = openFileDialog1.FileName;
-                using (StreamReader sr = new StreamReader(form1.path, System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(openFileDialog1.FileName, System.Text.Encoding.Default))
                 {
                     try
                     {
@@ -279,6 +286,7 @@ namespace Program__18
         }
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            listcount = 0;
             OpenFile openFile = new OpenFile();
             openFile.Open();
         }
@@ -287,9 +295,10 @@ namespace Program__18
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.ShowDialog();
-            string sourcePath = @"1.txt";
+            string sourcePath = @"";
+            string sourceFile = Path.Combine(sourcePath,file);
             string destFile = saveFileDialog.FileName;
-            File.Copy(sourcePath, destFile, true);         
+            File.Copy(sourceFile, destFile, true);         
         }
         private void анализToolStripMenuItem_Click(object sender, EventArgs e)
         {
