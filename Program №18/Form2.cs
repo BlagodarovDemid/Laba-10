@@ -27,13 +27,11 @@ namespace Program__18
         {
             if (ColumnName == "Bubble")
             {
-                dataGridView1[0,0].Value = count;
-                dataGridView1[1,0].Value = "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime;
+                dataGridView1.Rows.Add("Bubble",count, "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime);
             }
             if (ColumnName == "Shell")
             {
-                dataGridView1[0, 0].Value = count;
-                dataGridView1[2, 0].Value = "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime;
+                dataGridView1.Rows.Add("Shell", count, "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime);
             }
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
