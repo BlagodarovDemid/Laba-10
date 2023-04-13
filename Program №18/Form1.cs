@@ -150,13 +150,14 @@ namespace Program__18
                         iterationCount++;
                         comprasin++;
                         sw.Write("\t\n{0} Итерация:", iterationCount);
+                        sw.Write("\t\nСравниваем {0} и {1}", array[j], array[j - d]);
                         while ((j >= d) && (array[j - d] > array[j]))
                         {
                             sw.Write("\t\nПерестановка {0} и {1}", array[j], array[j - d]);
+                            form1.AddItemsListBox(array, array[j], array[j - d]);
                             Swap(ref array[j], ref array[j - d]);
                             j = j - d;
                             NumberOfPermutations++;
-                            form1.AddItemsListBox(array);
                         }
                         sw.Write("\t\n");
                         for (int v = 0; v < array.Length; v++)
@@ -221,6 +222,7 @@ namespace Program__18
             mas = Generate(count);
             button1.Enabled = true;
             listBox1.Text = "";
+            AddItemsListBox(mas);
         }
         private void button2_Click(object sender, EventArgs e)
         {
