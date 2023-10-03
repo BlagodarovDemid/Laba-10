@@ -18,13 +18,18 @@ namespace Program__18
         {
             InitializeComponent();
         }
-        string ColumnName;
         public static int count;
         public static int comprasin;
         public static int NumberOfPermutations;
         public static string elapsedTime;
         public void Row(string ColumnName,int count,int comprasin, int NumberOfPermutations,string elapsedTime)
         {
+            if (dataGridView1.Columns.Count == 0)
+            {
+                dataGridView1.Columns.Add("Метод","");
+                dataGridView1.Columns.Add("Объём выборки","");
+                dataGridView1.Columns.Add("Данные","");
+            }
             if (ColumnName == "Bubble")
             {
                 dataGridView1.Rows.Add("Bubble",count, "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime);
@@ -34,8 +39,14 @@ namespace Program__18
                 dataGridView1.Rows.Add("Shell", count, "С: " + comprasin.ToString() + " П: " + NumberOfPermutations.ToString() + " t: " + elapsedTime);
             }
         }
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -58,16 +58,22 @@ namespace Program__18
         public void AddItemsListBox(int[] mas, int first = -1, int second = -1)
         {
             listBox1.Items.Add("");
-            foreach (var item in mas)
+            try
             {
-                if (item == first || item == second)
+                foreach (var item in mas)
                 {
-                    listBox1.Items[listcount] += '[' + Convert.ToString(item) + ']' + " ";
+                    if (item == first || item == second)
+                    {
+                        listBox1.Items[listcount] += '[' + Convert.ToString(item) + ']' + " ";
+                    }
+                    else
+                    {
+                        listBox1.Items[listcount] += Convert.ToString(item) + " ";
+                    }
                 }
-                else
-                {
-                    listBox1.Items[listcount] += Convert.ToString(item) + " ";
-                }
+            } catch
+            {
+                MessageBox.Show("Массив возможно пуст");
             }
 
             listcount++;
@@ -122,7 +128,8 @@ namespace Program__18
                 resultTime.Seconds,
                 resultTime.Milliseconds);
                 form1.label6.Text = elapsedTime.ToString();
-                form2.Row("Bubble", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString());
+                if (form1.count > 0) { form2.Row("Bubble", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString()); }
+                else { form2.Row("Bubble", form1.mas.Count(), comprasin, NumberOfPermutations, elapsedTime.ToString()); }
                 return mas;
             }
         }
@@ -177,7 +184,8 @@ namespace Program__18
                 resultTime.Seconds,
                 resultTime.Milliseconds);
                 form1.label6.Text = elapsedTime.ToString();
-                form2.Row("Shell", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString());
+                if (form1.count > 0) { form2.Row("Shell", form1.count, comprasin, NumberOfPermutations, elapsedTime.ToString()); }
+                else { form2.Row("Shell", form1.mas.Count(), comprasin, NumberOfPermutations, elapsedTime.ToString()); }
                 return array;
             }
         }
@@ -186,7 +194,7 @@ namespace Program__18
             count = trackBar1.Value;
             textBox1.Text = trackBar1.Value.ToString();
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Bubble
         {
             if (radioButton1.Checked)
             {
@@ -217,20 +225,27 @@ namespace Program__18
                 button1.Enabled = false;
             }
         }
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) //Generate mass
         {
             mas = Generate(count);
             button1.Enabled = true;
             listBox1.Text = "";
             AddItemsListBox(mas);
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) //Clear mass
         {
             Array.Clear(mas, 0, mas.Length);
             listcount = 0;
+            count = 0;
             listBox1.Items.Clear();
+            listBox1.Items.Add("");
+            listBox1.Items[0] = "";
+            label6.Text = ("00:00:00:000");
+            label2.Text = "0";
+            label4.Text = "0";
+
         }
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) //Switch to BubbleSort
         {
             file = "BubbleSort.txt";
             button1.Enabled = true;
@@ -238,29 +253,13 @@ namespace Program__18
             trackBar1.Enabled = true;
             button3.Enabled = true;
         }
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) //Switch to ShellSort
         {
             file = "ShellSort.txt";
             button1.Enabled = true;
             label7.Enabled = true;
             trackBar1.Enabled = true;
             button3.Enabled = true;
-        }
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
         }
         public class OpenFile
         {
@@ -292,6 +291,13 @@ namespace Program__18
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             listcount = 0;
+            count = 0;
+            listBox1.Items.Clear();
+            listBox1.Items.Add("");
+            listBox1.Items[0] = "";
+            label6.Text = ("00:00:00:000");
+            label2.Text = "0";
+            label4.Text = "0";
             OpenFile openFile = new OpenFile();
             openFile.Open();
         }
@@ -309,11 +315,30 @@ namespace Program__18
         {
             form2.Show();
         }
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e) //Подгрузка сортировок и метода открытия файла
         {
             Bubble.form1 = this;
             Shell.form1 = this;
             OpenFile.form1 = this;
+        }
+
+
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

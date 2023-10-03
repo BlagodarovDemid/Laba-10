@@ -241,7 +241,7 @@
             this.анализToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1251, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1251, 30);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -252,7 +252,7 @@
             this.загрузитьToolStripMenuItem,
             this.сохранитьToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(59, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(59, 26);
             this.toolStripMenuItem1.Text = "Файл";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -273,7 +273,7 @@
             // анализToolStripMenuItem
             // 
             this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
-            this.анализToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.анализToolStripMenuItem.Size = new System.Drawing.Size(74, 26);
             this.анализToolStripMenuItem.Text = "Анализ";
             this.анализToolStripMenuItem.Click += new System.EventHandler(this.анализToolStripMenuItem_Click);
             // 
@@ -292,7 +292,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "w";
+            this.Text = "Sort";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
